@@ -23,6 +23,7 @@ R: tested on R version 4.2.1 (2022-06-23) -- "Funny-Looking Kid"
 
 ## Example
 
+An example dataset is available at "<path_to_GAMBA>/example/". To run GAMBA on it, we can execute the following bash script:
 
 ```bash
 cd <path_to_GAMBA>/example/fastqs/
@@ -30,6 +31,9 @@ bash <path_to_GAMBA>/src/GAMBA.sh -f <path_to_GAMBA>/example/fastqs \
 -p <path_to_GAMBA>/example/primers/primers.fa -g <path_to_GAMBA>/example/genome/ \
 -t <path_to_trimmomatic_jar_executable> -q 20 -S 100 -L 230 -c 1
 ```
+
+The expected output is available as "<path_to_GAMBA>/example/expected_output.zip".
+
 
 ## Details for its implementation
 
