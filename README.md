@@ -80,7 +80,23 @@ The primer file (-p) is as well a multi-FASTA file. In our case, to prepare out 
 |cg12803068	|ACAATAACACATACAAAAACT	  | Rv        |
 |cg09935388	|CCAACAAATATATCTAAAAACC	  | Rv        |
 
+We prepped out multi-FASTA file as:
 
+
+
+```r
+library(data.table)
+library(seqinr)
+primers = as.data.frame(fread("primers.txt"))
+primers_RC = primers
+primers_RC$Primer = sapply(1:nrow(primers_RC), function(x) RC(primers_RC$Primer[x]))
+primers$orient = "direct"
+primers_RC$orient = "RC"
+PRIMERS = rbind(primers, primers_RC)
+LIST = lapply(1:nrow(PRIMERS), function(x) PRIMERS$Primer[x])
+Names = paste(PRIMERS$`cg Name`, PRIMERS$Direction, primers$orient, sep = "_")
+write.fasta(LIST, names = Names, file.out = "primers.fa")
+```
 
 
 
