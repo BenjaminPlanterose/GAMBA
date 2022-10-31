@@ -9,6 +9,8 @@ load(file = "Vidaki_et_al_2cat.rda")
 load(file = "Vidaki_et_al_3cat.rda")
 ```
 
+Each file corresponds to the following models:
+
 | cg_name          | Descriptions                                                              |
 | ---------------- | ------------------------------------------------------------------------- |
 |Maas_et_al_2cat   | Logistic regression, microarray                                           |
