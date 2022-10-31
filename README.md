@@ -23,7 +23,7 @@ R: tested on R version 4.2.1 (2022-06-23) -- "Funny-Looking Kid"
 
 ## Example
 
-An example dataset is available at "<path_to_GAMBA>/example/". To run GAMBA on it, we can execute the following bash script:
+An example dataset is available at "<path_to_GAMBA>/example/". To run GAMBA on it, run the following bash commands:
 
 ```bash
 cd <path_to_GAMBA>/example/fastqs/
