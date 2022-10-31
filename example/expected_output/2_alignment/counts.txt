@@ -1,4 +1,0 @@
-S84_sorted.bam
-19400
-S92_sorted.bam
-21506

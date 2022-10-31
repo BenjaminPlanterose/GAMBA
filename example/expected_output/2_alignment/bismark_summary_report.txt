@@ -1,3 +1,0 @@
-File	Total Reads	Aligned Reads	Unaligned Reads	Ambiguously Aligned Reads	No Genomic Sequence	Duplicate Reads (removed)	Unique Reads (remaining)	Total Cs	Methylated CpGs	Unmethylated CpGs	Methylated chgs	Unmethylated chgs	Methylated CHHs	Unmethylated CHHs
-trim_cut_S84_R1_bismark_bt2_pe.bam	10248	9704	544	0	4			1114505	4983	229607	6636	322896	10857	539526
-trim_cut_S92_R1_bismark_bt2_pe.bam	11155	10759	396	0	6			1306243	290369	6175	4701	389202	2750	613046

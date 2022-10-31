@@ -1,5 +1,0 @@
-Module	Section	Sample Name	Source
-FastQC	all_sections	84_S84_L001_R1_001	/home/ultron/Git/GAMBA/example/fastqs/0_FASTQ/QC/84_S84_L001_R1_001_fastqc.zip
-FastQC	all_sections	84_S84_L001_R2_001	/home/ultron/Git/GAMBA/example/fastqs/0_FASTQ/QC/84_S84_L001_R2_001_fastqc.zip
-FastQC	all_sections	92_S92_L001_R1_001	/home/ultron/Git/GAMBA/example/fastqs/0_FASTQ/QC/92_S92_L001_R1_001_fastqc.zip
-FastQC	all_sections	92_S92_L001_R2_001	/home/ultron/Git/GAMBA/example/fastqs/0_FASTQ/QC/92_S92_L001_R2_001_fastqc.zip

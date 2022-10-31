@@ -1,5 +1,0 @@
-Module	Section	Sample Name	Source
-FastQC	all_sections	trim_cut_S84_R1	/home/ultron/Git/GAMBA/example/fastqs/1_trimmed_reads/trimmomatic/cutadapt/QC/trim_cut_S84_R1_fastqc.zip
-FastQC	all_sections	trim_cut_S84_R2	/home/ultron/Git/GAMBA/example/fastqs/1_trimmed_reads/trimmomatic/cutadapt/QC/trim_cut_S84_R2_fastqc.zip
-FastQC	all_sections	trim_cut_S92_R1	/home/ultron/Git/GAMBA/example/fastqs/1_trimmed_reads/trimmomatic/cutadapt/QC/trim_cut_S92_R1_fastqc.zip
-FastQC	all_sections	trim_cut_S92_R2	/home/ultron/Git/GAMBA/example/fastqs/1_trimmed_reads/trimmomatic/cutadapt/QC/trim_cut_S92_R2_fastqc.zip
