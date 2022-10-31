@@ -26,7 +26,7 @@ R: tested on R version 4.2.1 (2022-06-23) -- "Funny-Looking Kid"
 
 ```bash
 cd <path_to_GAMBA>/example/fastqs/
-bash /home/ultron/Git/GAMBA/src/GAMBA.sh -f /home/ultron/Git/GAMBA/example/fastqs \
--p /home/ultron/Git/GAMBA/example/primers/primers.fa -g /home/ultron/Git/GAMBA/example/genome/ \
--t /home/ultron/opt/Trimmomatic-0.39/trimmomatic-0.39.jar -q 20 -S 100 -L 230 -c 1
+bash <path_to_GAMBA>/src/GAMBA.sh -f <path_to_GAMBA>/example/fastqs \
+-p <path_to_GAMBA>/example/primers/primers.fa -g <path_to_GAMBA>/example/genome/ \
+-t <path_to_trimmomatic_jar_executable> -q 20 -S 100 -L 230 -c 1
 ```
