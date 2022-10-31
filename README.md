@@ -101,11 +101,3 @@ LIST = lapply(1:nrow(PRIMERS), function(x) PRIMERS$Primer[x])
 Names = paste(PRIMERS$`cg Name`, PRIMERS$Direction, primers$orient, sep = "_")
 write.fasta(LIST, names = Names, file.out = "primers.fa")
 ```
-
-
-
-
-
-
-
-
