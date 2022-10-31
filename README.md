@@ -40,8 +40,8 @@ The expected output is available as "<path_to_GAMBA>/example/expected_output.zip
 ### Genome preparation
 
 The genome file (-g) is a multi-FASTA file where each sequence corresponds to a different amplicon. 
-The sequence must contain primer-binding sites; additionally, it is critical to add NN at the beginning and end of each sequence (i.e. NN pre- and post- padding).
-If not, the Bismark bisulfite aligner will drop out most of the alignment.
+All nucleotide sequence must contain primer-binding sites; additionally, it is critical to add NN at the beginning and at the end of each sequence (i.e. NN pre- and post- padding).
+If not, the Bismark bisulfite aligner (in principle, not designed for amplicon bisulfite sequencing but rather whole genome bisulfite sequencing) will drop out most of the alignment.
 
 
 ```bash
