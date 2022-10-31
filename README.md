@@ -9,7 +9,7 @@ Operating system: tested on Ubuntu 18.04.6 LTS (Bionic Beaver)
 R: tested on R version 4.2.1 (2022-06-23) -- "Funny-Looking Kid"
 ```
 
-For issues arising while running UMtools, either [report an issue](https://github.com/BenjaminPlanterose/GAMBA/issues) or simply contact b.planterosejimenez at erasmusmc.nl.
+For issues arising while running GAMBA, either [report an issue](https://github.com/BenjaminPlanterose/GAMBA/issues) or simply contact b.planterosejimenez at erasmusmc.nl.
 
 ## Dependencies
 
