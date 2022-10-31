@@ -47,7 +47,7 @@ bismark_genome_preparation <genome_file>
 
 ### Primer preparation
 
-The primer file (-p) is as well a multi-FASTA file. In our case, to prepare out file, we started from:
+The primer file (-p) is as well a multi-FASTA file. In our case, to prepare out file, we started from a "primers.txt" file with the following format:
 
 | cg_name       | Primer                  | Direction |
 | ------------- | ----------------------- | --------- |
@@ -80,9 +80,7 @@ The primer file (-p) is as well a multi-FASTA file. In our case, to prepare out 
 |cg12803068	|ACAATAACACATACAAAAACT	  | Rv        |
 |cg09935388	|CCAACAAATATATCTAAAAACC	  | Rv        |
 
-We prepped out multi-FASTA file as:
-
-
+We generated a multi-FASTA file with the following R-script:
 
 ```r
 library(data.table)
