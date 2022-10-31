@@ -11,11 +11,11 @@ load(file = "Vidaki_et_al_3cat.rda")
 
 Each file corresponds to the following models:
 
-| cg_name          | Descriptions                                                              |
-| ---------------- | ------------------------------------------------------------------------- |
-|Maas_et_al_2cat   | Logistic regression, microarray                                           |
-|Maas_et_al_3cat   | Multinomial Logistic regression, microarray                               |
-|Vidaki_et_al_2cat | Logistic regression, microarray+MPS(uncorrected for PCR bias)             |
-|Vidaki_et_al_3cat | Multinomial Logistic regression, microarray+MPS(uncorrected for PCR bias) |
+| cg_name          | Descriptions                                                               |
+| ---------------- | -------------------------------------------------------------------------- |
+|Maas_et_al_2cat   | Logistic regression, microarray                                            |
+|Maas_et_al_3cat   | Multinomial Logistic regression, microarray                                |
+|Vidaki_et_al_2cat | Logistic regression, microarray&MPS (uncorrected for PCR bias)             |
+|Vidaki_et_al_3cat | Multinomial Logistic regression, microarray&MPS (uncorrected for PCR bias) |
 
 
