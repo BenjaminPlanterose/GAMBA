@@ -30,3 +30,31 @@ bash <path_to_GAMBA>/src/GAMBA.sh -f <path_to_GAMBA>/example/fastqs \
 -p <path_to_GAMBA>/example/primers/primers.fa -g <path_to_GAMBA>/example/genome/ \
 -t <path_to_trimmomatic_jar_executable> -q 20 -S 100 -L 230 -c 1
 ```
+
+## Details for its implementation
+
+### Genome preparation
+
+The genome file (-g) corresponds to multi-FASTA file where each sequence corresponds to each amplicon. 
+The sequence must contain primers binding sites; additionally, it is critical to add NN at the beginning and end of each sequence (i.e. NN pre- and post- padding).
+If not, bismark will drop out most of the alignment.
+
+
+```bash
+samtools index <genome_file>
+bismark_genome_preparation <genome_file>
+```
+
+
+### Primer preparation
+
+
+
+
+
+
+
+
+
+
+
