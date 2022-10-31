@@ -1,0 +1,8 @@
+trim_cut_S84_R1.fastq.gz
+10248
+trim_cut_S84_R2.fastq.gz
+10248
+trim_cut_S92_R1.fastq.gz
+11155
+trim_cut_S92_R2.fastq.gz
+11155

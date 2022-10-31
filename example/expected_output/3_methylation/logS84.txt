@@ -1,0 +1,3 @@
+
+Now testing Bismark result file >../2_alignment/trim_cut_S84_R1_bismark_bt2_pe.bam< for positional sorting (which would be bad...)	/home/ultron/Git/GAMBA/example/fastqs/3_methylation/CpG_context_trim_cut_S84_R1_bismark_bt2_pe.txt.gz	/home/ultron/Git/GAMBA/example/fastqs/3_methylation/CHG_context_trim_cut_S84_R1_bismark_bt2_pe.txt.gz	/home/ultron/Git/GAMBA/example/fastqs/3_methylation/CHH_context_trim_cut_S84_R1_bismark_bt2_pe.txt.gz
+
