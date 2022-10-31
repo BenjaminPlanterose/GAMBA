@@ -35,9 +35,9 @@ bash <path_to_GAMBA>/src/GAMBA.sh -f <path_to_GAMBA>/example/fastqs \
 
 ### Genome preparation
 
-The genome file (-g) corresponds to multi-FASTA file where each sequence corresponds to each amplicon. 
-The sequence must contain primers binding sites; additionally, it is critical to add NN at the beginning and end of each sequence (i.e. NN pre- and post- padding).
-If not, bismark will drop out most of the alignment.
+The genome file (-g) is a multi-FASTA file where each sequence corresponds to a different amplicon. 
+The sequence must contain primer-binding sites; additionally, it is critical to add NN at the beginning and end of each sequence (i.e. NN pre- and post- padding).
+If not, the Bismark bisulfite aligner will drop out most of the alignment.
 
 
 ```bash
@@ -45,9 +45,40 @@ samtools index <genome_file>
 bismark_genome_preparation <genome_file>
 ```
 
-
 ### Primer preparation
 
+The primer file (-p) is as well a multi-FASTA file. In our case, to prepare out file, we started from:
+
+| cg_name       | Primer                  | Direction |
+| ------------- | ----------------------- | --------- |
+|cg13039251	|TGTGTAAGTTAGTTTGTGTT	  | Fwd       |
+|cg15693572	|TTAAAATGTAGATTAGGGGA	  | Fwd       |
+|cg23576855	|TAGGGTTGTTTTTTTAGAG	  | Fwd       |
+|cg01940273	|GATAAAGTTTGGTTTTTTGG	  | Fwd       |
+|cg03636183	|TTTATTAGTAGTATGGTGGA	  | Fwd       |
+|cg05575921	|ATTGTTTATTTTTGAGAGGG	  | Fwd       |
+|cg12876356	|TGGGTATATTGATTTTTTT	  | Fwd       |
+|cg21566642	|TAGTTGGGGTTTTTGTATTTAG	  | Fwd       |
+|cg22132788	|TATATTGTTAGGGGTGAGT	  | Fwd       |
+|cg05951221	|TTGGTTGTTAGGAGGTT	  | Fwd1      |
+|cg05951221	|TTGGTTGTTAGGAGGTC	  | Fwd2      |
+|cg06126421	|TTATGGTAATTGTTTTGGAG	  | Fwd       |
+|cg12803068	|TTTTGTTGATAGGGGGAA	  | Fwd       |
+|cg09935388	|TTAGTGAGAGGTTGTATTT	  | Fwd1      |
+|cg09935388	|TTAGTGAGAGGTTGTATTC	  | Fwd2      |
+|cg13039251	|AACTATCTCCCTATTTTCTA	  | Rv        |
+|cg15693572	|CTCAACCACATTATCATAAAACA  | Rv        |
+|cg23576855	|CCCTTCTTAATTACAATAAAC	  | Rv        |
+|cg01940273	|ATTACATCTCTCTTCCCTT	  | Rv        |
+|cg03636183	|ACCAAATCTATACCAATAAC	  | Rv        |
+|cg05575921	|AACTCTATACCTCCAAAA	  | Rv        |
+|cg12876356	|AATCTATTTACTATTCTACCTCC  | Rv        |
+|cg21566642	|CTTAAATACTTAACCTCCT	  | Rv        |
+|cg22132788	|CCAAAACAAAATAAAAAAAC	  | Rv        |
+|cg05951221	|ACTTCTCTCAAAAAACAA	  | Rv        |
+|cg06126421	|AATATTTCCCCTTTTATCCA	  | Rv        |
+|cg12803068	|ACAATAACACATACAAAAACT	  | Rv        |
+|cg09935388	|CCAACAAATATATCTAAAAACC	  | Rv        |
 
 
 
