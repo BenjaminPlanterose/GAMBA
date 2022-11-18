@@ -61,8 +61,8 @@ If not, the Bismark bisulfite aligner (in principle, not designed for amplicon b
 Additionally, it is necessary to perform genome preparation as per [Bismark user-guide](https://rawgit.com/FelixKrueger/Bismark/master/Docs/Bismark_User_Guide.html):
 
 ```bash
-samtools index <genome_file>
-bismark_genome_preparation <genome_file>
+samtools index <genome_file.fa>
+bismark_genome_preparation <genome_directory>
 ```
 
 ### Primer preparation
