@@ -23,6 +23,9 @@ For issues arising while running GAMBA, either [report an issue](https://github.
 	* [data.table](https://cran.r-project.org/web/packages/data.table/index.html)
 	* [R.utils](https://cran.r-project.org/web/packages/R.utils/index.html)
 
+The PATH for dependencies *FastQC*, *MultiQC*, *cutadapt*, *bismark* and *samtools* are assumed to be exported in the [.bashrc](https://linuxhint.com/export-a-path-in-bashrc/) file.
+The PATH for dependency *Trimmomatic* instead must be supplied as an input.
+
 ## Example
 
 An example dataset is available at "<path_to_GAMBA>/example/". To run GAMBA on it, run the following bash commands:
