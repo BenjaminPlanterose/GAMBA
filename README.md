@@ -58,7 +58,7 @@ Thus, make sure that this convention is used on your specific samples.
 The genome file (-g) is a multi-FASTA file where each sequence corresponds to a different amplicon. 
 All nucleotide sequence must contain primer-binding sites; additionally, it is critical to add NN at the beginning and at the end of each sequence (i.e. NN pre- and post- padding).
 If not, the Bismark bisulfite aligner (in principle, not designed for amplicon bisulfite sequencing but rather whole genome bisulfite sequencing) will drop out most of the alignment.
-
+Additionally, it is necessary to perform genome preparation as per [Bismark user-guide](https://rawgit.com/FelixKrueger/Bismark/master/Docs/Bismark_User_Guide.html):
 
 ```bash
 samtools index <genome_file>
