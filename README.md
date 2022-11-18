@@ -42,6 +42,17 @@ The expected output is available as "<path_to_GAMBA>/example/expected_output.zip
 
 ## Details for its implementation
 
+### Sample names
+
+GAMBA assumes certain formating on the name of the sequencing files. Specifically, the following name processing is performed: 
+```bash
+file_name="<PATH>/84_S84_L001_R1_001.fastq.gz"
+preindex=$(echo $file_name | rev | cut -d'/' -f 1 | rev) # 84_S84_L001_R1_001.fastq.gz
+index="$(cut -d'_' -f2 <<< ${preindex})" # S84
+```
+
+Thus, make sure that this convention is used on your specific samples.
+
 ### Genome preparation
 
 The genome file (-g) is a multi-FASTA file where each sequence corresponds to a different amplicon. 
