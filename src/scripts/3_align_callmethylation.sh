@@ -1,15 +1,12 @@
 #!bin/bash
 
-
 genome=$1
 fastq=$2
 nThread=$3
 
-
 R1=($( ls $fastq/*R1*.fastq.gz -1v))
 R2=($( ls $fastq/*R2*.fastq.gz -1v))
 l=${#R1[@]}
-
 
 for ((i=0;i<=$l-1;i+=1))
 do
@@ -38,9 +35,3 @@ done
 
 mkdir bedGraphs
 mv *cov.gz bedGraphs
-
-
-
-
-
-

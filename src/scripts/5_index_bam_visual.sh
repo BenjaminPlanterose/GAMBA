@@ -1,10 +1,8 @@
 #!/bin/bash/
 
 where=$1
-
 bams=($( ls $where/*.bam -1v))
 l=${#bams[@]}
-#index=( $(seq 1 $l ) )
 
 cd $where
 
@@ -16,6 +14,3 @@ do
  samtools sort ${bams[$i]} > ${index}_sorted.bam
  samtools index ${index}_sorted.bam
 done
-
-
-

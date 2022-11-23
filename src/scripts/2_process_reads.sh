@@ -1,6 +1,5 @@
 #!/bash/bin
 
-
 TRIM=$1
 primer=$2
 fastq=$3
@@ -28,6 +27,3 @@ do
  java -jar $TRIM PE ${R1[$i]} ${R2[$i]} -summary summary_${index}.txt -threads $nThread -baseout cut_${index}.fastq.gz ILLUMINACLIP:$primer:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
  cutadapt -m $m -M $M -q $QC -j $nThread -o cutadapt/trim_cut_${index}_R1.fastq.gz -p cutadapt/trim_cut_${index}_R2.fastq.gz cut_${index}_1P.fastq.gz cut_${index}_2P.fastq.gz > cutadapt/cutadapt.log${index}
 done
-
-
-

@@ -7,4 +7,3 @@ do
 	echo $i >> counts.txt
 	echo $(zcat $i | wc -l)/4|bc >> counts.txt
 done
-

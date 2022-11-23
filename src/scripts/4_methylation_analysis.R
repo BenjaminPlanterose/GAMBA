@@ -1,14 +1,14 @@
 #!/usr/bin/env Rscript
 
-args = commandArgs(trailingOnly=TRUE)
-
+# Load libraries
 library(data.table)
 library(R.utils)
 
+# Receive arguments from command prompt
+args = commandArgs(trailingOnly=TRUE)
 where = args[[1]]
 nThread = as.numeric(args[[2]])
 setwd(where)
-
 
 # Read all bedgraph files
 files = list.files(pattern = "*.cov")
@@ -43,7 +43,3 @@ fwrite(data.table(coverage, keep.rownames = T), paste(Sys.Date(), "coverage.txt"
 setwd("../")
 files = list.files(pattern = "*.bedGraph.gz")
 bed_list = lapply(1:length(files), function(x) as.data.frame(fread(files[x], skip = 1, nThread = nThread)))
-
-
-
-

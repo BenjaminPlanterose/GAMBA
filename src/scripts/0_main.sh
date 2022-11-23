@@ -1,17 +1,6 @@
-#!/bash/bin
+#!/bin/bash
 
 #################################################### Params
-
-# Receive arguments
-#where="/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Data_Run4"
-#scripts="/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Pipeline"
-#PRIMER="/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Info/primers"
-#TRIM="/home/ultron/opt/Trimmomatic-0.39"
-#genome="/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Info/genome"
-#QC=20
-#m=100
-#M=230 # biggest amplicon 265
-#nThread=4 
 
 where=$1
 PRIMER=$2
@@ -24,7 +13,6 @@ nThread=$8
 scripts="$9/scripts"
 
 #################################################### Main
-
 
 cd $where
 mkdir 0_FASTQ
