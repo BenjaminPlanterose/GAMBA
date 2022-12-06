@@ -23,8 +23,18 @@ For issues arising while running GAMBA, either [report an issue](https://github.
 	* [data.table](https://cran.r-project.org/web/packages/data.table/index.html)
 	* [R.utils](https://cran.r-project.org/web/packages/R.utils/index.html)
 
-The PATH for dependencies *FastQC*, *MultiQC*, *cutadapt*, *bismark* and *samtools* are assumed to be exported in the [.bashrc](https://linuxhint.com/export-a-path-in-bashrc/) file.
+The PATH for dependencies *FastQC*, *MultiQC*, *cutadapt*, *bismark*, *samtools* are assumed to be exported in the [.bashrc](https://linuxhint.com/export-a-path-in-bashrc/) file.
 The PATH for dependency *Trimmomatic* instead must be supplied as an input.
+
+To verify the proper installation of all dependencies, run:
+```bash
+fastqc -h
+multiqc --help
+cutadapt -h
+bismark --help
+samtools --help
+bash <path_to_GAMBA>/src/GAMBA.sh --h
+```
 
 ## Example
 
