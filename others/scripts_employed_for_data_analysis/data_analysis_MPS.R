@@ -17,20 +17,6 @@ library(effectsize)
 library(UMtools)
 library(IlluminaHumanMethylation450kanno.ilmn12.hg19)
 
-dim(phenotype)
-jkl = phenotype[!startsWith(phenotype$ERF_ID, 'STD'),]
-jkl = jkl[jkl$ERF_ID %in% colnames(METH),]
-jkl = jkl[jkl$smoking_3cat != '', ]
-dup = names(which(table(jkl$ERF_ID) == 2))
-rem = sapply(1:length(dup), function(i) which(jkl$ERF_ID == dup[i])[1])
-jkl = jkl[-rem,]
-table(jkl$smoking_3cat)
-ghj = table(jkl$smoking_3cat, jkl$typed_gender_arwin)
-ghj[,1]/rowSums(ghj)
-table(jkl$typed_gender_arwin)/232
-
-sd(na.omit(jkl$age[jkl$smoking_3cat == 'past_smoker'] - jkl$age_quit_cigarettes[jkl$smoking_3cat == 'past_smoker']))
-
 process_fread <- function(mat)
 {
   CpGs = mat$rn
@@ -66,9 +52,6 @@ macrof1 <- function(data, lev = NULL, model = NULL)
   c(F1 = F1_Score_macro_weighted(data$obs, data$pred))
 }
 
-# meQTL: cg23576855
-# age: cg13039251, cg06126421, cg15693572
-
 ####################### General #######################
 
 breaks=seq(0, 1, 0.05)
@@ -77,12 +60,12 @@ LEV = c("cg05575921", "cg13039251", "cg03636183", "cg12803068", "cg22132788",
         "cg06126421", "cg21566642", "cg23576855", "cg15693572", "cg05951221",
         "cg01940273", "cg12876356", "cg09935388")
 
-setwd("/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Info/genome/")
+setwd("<dir>")
 cg_pos = fread("cg_position.txt")
 cg_pos = cg_pos[order(cg_pos$cg),]
 POS_450K = paste(cg_pos$cg, as.numeric(cg_pos$position)+2, as.numeric(cg_pos$position)+2, sep = "_") # +2 because of NN, beginning amplicon
 
-setwd("/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Info/models/")
+setwd("<dir>")
 load(file = "Two_category_model.rda")
 M2cat
 load(file = "Three_category_model.rda")
@@ -91,7 +74,7 @@ M3cat
 ####################### Comparing runs #######################
 
 # Run 1
-setwd("/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Data_Run1/0_FASTQ/")
+setwd("<dir>")
 counts = fread("counts.txt", header = F)$V1
 Samp = counts[seq(1, length(counts), 2)]
 counts = as.numeric(counts[seq(2, length(counts), 2)])
@@ -102,7 +85,7 @@ counts = counts[log10(counts+1) > 3] # remove failed barcounts
 sum(counts)/10^6 # 30.29352 total reads
 mean(counts) # 172122.3 read pairs per sample
 mean(counts)/13 # 13240.18 read pairs per marker per sample
-setwd("/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Data_Run1/3_methylation/bedGraphs/")
+setwd("<dir>")
 METH_cov = process_fread(fread("2022-01-24_coverage.txt", header = T))
 sum(POS_450K %in% rownames(METH_cov)) # 13
 failed = unique(sapply(strsplit(failed, split = "_"), function(x) x[2]))
@@ -128,7 +111,7 @@ round(rowSds(METH_cov[POS_450K, !(1:ncol(METH_cov) %in% remove)]), 1)
 # grep('S75', colnames(METH_cov)) # integer(0)
 
 # Run 2
-setwd("/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Data_Run2/0_FASTQ/")
+setwd("<dir>")
 counts = fread("counts.txt", header = F)$V1
 Samp = counts[seq(1, length(counts), 2)]
 counts = as.numeric(counts[seq(2, length(counts), 2)])
@@ -139,7 +122,7 @@ counts = counts[log10(counts+1) > 3] # remove failed barcounts
 sum(counts)/10^6 # 29.42786 M total reads
 mean(counts) # 193604.4 read pairs per sample
 mean(counts)/13 # 14892.64 read pairs per marker per sample
-setwd("/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Data_Run2/3_methylation/bedGraphs/")
+setwd("<dir>")
 METH_cov = process_fread(fread("2022-01-25_coverage.txt", header = T))
 sum(POS_450K %in% rownames(METH_cov)) # 13
 failed = unique(sapply(strsplit(failed, split = "_"), function(x) x[2]))
@@ -167,7 +150,7 @@ p2 = ggplot(data = cov.m2, mapping = aes(x = Var1, y = log10(value+1), fill = Va
         plot.title = element_text(hjust = 0.5))
 
 # Run 3
-setwd("/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Data_Run3/0_FASTQ/")
+setwd("<dir>")
 counts = fread("counts.txt", header = F)$V1
 Samp = counts[seq(1, length(counts), 2)]
 counts = as.numeric(counts[seq(2, length(counts), 2)])
@@ -178,7 +161,7 @@ counts = counts[log10(counts+1) > 4.6] # remove failed barcounts
 sum(counts)/10^6 # 37.7425 M total reads
 mean(counts) # 200758 read pairs per sample
 mean(counts)/13 # 15442.92 read pairs per marker per sample
-setwd("/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Data_Run3/3_methylation/bedGraphs/")
+setwd("<dir>")
 METH_cov = process_fread(fread("2022-01-26_coverage.txt", header = T))
 sum(POS_450K %in% rownames(METH_cov)) # 13
 failed = unique(sapply(strsplit(failed, split = "_"), function(x) x[2]))
@@ -222,32 +205,19 @@ p = ggplot(data = cov.m, aes(x = log10(count+1), y = run, fill = CpG)) + geom_de
 
 # scale_fill_manual(values = c('slategray1', 'slategray4', 'papayawhip', 'lightsteelblue')) 
 
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 ggsave(filename = 'C_count.tiff', plot = p, device = 'tiff', width = 6.7, height = 6.2, units = 'in', dpi = 300)
-
-
-
-
-# setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
-# ggsave(filename = 'C_count.tiff', plot = p+theme(legend.position = "none", text = element_text(size=6)), 
-#        device = 'tiff', width = 6.7/1.5, height = 6/2, units = 'in', dpi = 300)
-
 
 
 ####################### pooling METH #######################
 
 # Read METH
-setwd("/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Data_Run1/3_methylation/bedGraphs/")
+setwd("<dir>")
 METH1 = process_fread(fread("2022-01-24_meth.txt", header = T))/100
-setwd("/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Data_Run2/3_methylation/bedGraphs/")
+setwd("<dir>")
 METH2 = process_fread(fread("2022-01-25_meth.txt", header = T))/100
-setwd("/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Data_Run3/3_methylation/bedGraphs/")
+setwd("<dir>")
 METH3 = process_fread(fread("2022-01-26_meth.txt", header = T))/100
-
-# Estimating bisulfite conversion efficiency from non-CpG sites
-#######
-#######
-#######
 
 # process names and filter for 450K pos
 METH1 = process.names(METH1[POS_450K,], "")
@@ -255,7 +225,7 @@ METH2 = process.names(METH2[POS_450K,], "")
 METH3 = process.names(METH3[POS_450K,], "")
 
 # Remove failed barcodes
-setwd("/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Data_Run1/0_FASTQ/")
+setwd("<dir>")
 counts = fread("counts.txt", header = F)$V1
 Samp = counts[seq(1, length(counts), 2)]
 counts = as.numeric(counts[seq(2, length(counts), 2)]); names(counts) = Samp
@@ -263,7 +233,7 @@ failed = Samp[log10(counts+1) < 3] # S45, S58, S73, S75
 (remove = unique(sapply(strsplit(failed, split = '_'), function(x) x[2])))
 METH1 = METH1[, !(colnames(METH1) %in% remove)]
 #
-setwd("/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Data_Run2/0_FASTQ/")
+setwd("<dir>")
 counts = fread("counts.txt", header = F)$V1
 Samp = counts[seq(1, length(counts), 2)]
 counts = as.numeric(counts[seq(2, length(counts), 2)]); names(counts) = Samp
@@ -271,7 +241,7 @@ failed = Samp[log10(counts+1) < 3] # S19, S51, S54, S62, S64, S78
 (remove = unique(sapply(strsplit(failed, split = '_'), function(x) x[2])))
 METH2 = METH2[, !(colnames(METH2) %in% remove)]
 #
-setwd("/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Data_Run3/0_FASTQ/")
+setwd("<dir>")
 counts = fread("counts.txt", header = F)$V1
 Samp = counts[seq(1, length(counts), 2)]
 counts = as.numeric(counts[seq(2, length(counts), 2)]); names(counts) = Samp
@@ -285,7 +255,7 @@ ncol(METH2) # 76
 ncol(METH3) # 94
 
 # Read phenotype
-setwd("/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Info/phenotype/")
+setwd("<dir>")
 phenotype = as.data.frame(fread("ERF_phenotypes.txt"))
 phenotype$sequencing_index2 = paste('S', as.integer(sapply(strsplit(phenotype$sequencing_index, split = 'UDI'), function(x) x[2])), sep = '')
 
@@ -335,9 +305,7 @@ jkl = phenotype[phenotype$ERF_ID[!startsWith(phenotype$ERF_ID, 'STD')]  %in% col
 View(jkl)
 jkl[which(jkl$smoking_3cat == ''),]
 jkl = jkl[order(jkl$sequencing_run, jkl$sequencing_index),]
-# setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Results/')
-# fwrite(jkl, 'pheno_table.txt', sep = '\t', quote = F)
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Results/')
+setwd("<dir>")
 jkl = fread('pheno_table.txt')
 EXPORT_ORDER = jkl$ERF_ID
 length(EXPORT_ORDER) # 232
@@ -347,7 +315,7 @@ length(EXPORT_ORDER) # 232
 rownames(STD1) = sapply(strsplit(rownames(STD1), split = "_"), function(x) x[1])
 rownames(STD2) = sapply(strsplit(rownames(STD2), split = "_"), function(x) x[1])
 
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 UMtools::export_bigmat(bigmat = round(rbind(t(STD1), t(STD2)), 5), 'STDs.txt')
 
 plot(STD1[, colnames(STD2)], STD2)
@@ -391,7 +359,7 @@ p = ggplot(data = STD, aes(x = ratio, y = value, col = std)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
         plot.title = element_text(hjust = 0.5)) + scale_y_continuous(breaks = seq(0, 1, by = 1)) +
   scale_x_continuous(breaks = seq(0, 1, by = 1))
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 ggsave(filename = 'STDs.tiff', plot = p, device = 'tiff', width = 6.2, height = 8.7, units = 'in', dpi = 300)
 
 cor = sapply(1:length(LEV), function(x) cor(STD$ratio[STD$Var2 == LEV[x]], STD$value[STD$Var2 == LEV[x]], method = 'spearman'))
@@ -500,7 +468,7 @@ p = ggplot(data = STD, aes(x = ratio, y = value, col = Var2)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), legend.position = "none",
         plot.title = element_text(hjust = 0.5)) + scale_y_continuous(breaks = seq(0, 1, by = 0.5))
 
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 ggsave(filename = 'amplification_bias.tiff', plot = p, device = 'tiff', width = 6.7, height = 6.2, units = 'in', dpi = 300)
 UMtools::export_bigmat(COEF, 'coefficients.txt')
 
@@ -530,7 +498,7 @@ p= ggplot(data = df, aes(x = uncorrected_meth, y = corrected_meth, col = CpG)) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), legend.position = "none",
         plot.title = element_text(hjust = 0.5)) + scale_y_continuous(breaks = seq(0, 1, by = 0.5))
 
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 ggsave(filename = 'corrections.tiff', plot = p, device = 'tiff', width = 6.7, height = 6.2, units = 'in', dpi = 300)
 
 
@@ -546,12 +514,12 @@ y[y %in% c('current_smoker', 'past_smoker')] = 'past or current smoker'; y[y == 
 col_smoke = factor(y, levels = c('non-smoker', 'past or current smoker'))
 levels(col_smoke) = c('bisque1', 'dimgray'); col_smoke = as.character(col_smoke)
 
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 tiff(filename = 'betauncorrected_smoke.tiff', width = 6, height = 6, units = 'in', res = 300)
 heatmap.2(t(na.omit(t(X_uncor))), trace = "n", breaks= breaks, col = my_palette, margins = c(8,8), ColSideColors = col_smoke, 
           key.title = '', key.xlab = '')
 dev.off()
-tiff(filename = 'betacorrected_smoke.tiff', width = 6, height = 6, units = 'in', res = 300)
+setwd("<dir>")
 heatmap.2(t(na.omit(t(X_cor))), trace = "n", breaks= breaks, col = my_palette, margins = c(8,8), ColSideColors = col_smoke, 
           key.title = '', key.xlab = '')
 dev.off()
@@ -593,7 +561,7 @@ df$variable = as.character(df$variable)
 df$variable = factor(df$variable, levels = LEV)
 p = ggplot(data = na.omit(df), aes(x = variable, y = value, fill = smoke)) + geom_boxplot() + theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + scale_fill_manual(values = c('bisque1', 'dimgray')) + xlab('')
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 ggsave(filename = '2cat_uncorrected.tiff', plot = p, device = 'tiff', width = 6.7, height = 6.2, units = 'in', dpi = 300)
 
 
@@ -607,7 +575,7 @@ df$variable = factor(df$variable, levels = LEV)
 p = ggplot(data = na.omit(df), aes(x = variable, y = value, fill = smoke)) + geom_boxplot() + theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   scale_fill_manual(values = c('bisque1', 'gray82', 'dimgray')) + xlab("")
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 ggsave(filename = '3cat_uncorrected.tiff', plot = p, device = 'tiff', width = 6.7, height = 6.2, units = 'in', dpi = 300)
 
 ####### CORRECTED
@@ -623,7 +591,7 @@ df$variable = factor(df$variable, levels = LEV)
 p = ggplot(data = na.omit(df), aes(x = variable, y = value, fill = smoke)) + geom_boxplot() + theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   scale_fill_manual(values = c('bisque1', 'dimgray')) + xlab("")
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 ggsave(filename = '2cat_corrected.tiff', plot = p, device = 'tiff', width = 6.7, height = 6.2, units = 'in', dpi = 300)
 
 # 3 Categories
@@ -636,7 +604,7 @@ df$variable = factor(df$variable, levels = LEV)
 p = ggplot(data = na.omit(df), aes(x = variable, y = value, fill = smoke)) + geom_boxplot() + theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   scale_fill_manual(values = c('bisque1', 'gray82', 'dimgray')) + xlab("")
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 ggsave(filename = '3cat_corrected.tiff', plot = p, device = 'tiff', width = 6.7, height = 6.2, units = 'in', dpi = 300)
 
 
@@ -656,7 +624,7 @@ p = ggplot(data = na.omit(df), aes(x = age, y = value, col = smoke)) + geom_poin
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + facet_wrap(~variable) +
   scale_color_manual(values = c('bisque1', 'gray82', 'dimgray')) + xlab("Age (y)") + geom_smooth(method = 'lm', linetype = 2, col = 'red2', alpha = 0.7)
 
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 ggsave(filename = 'age.tiff', plot = p, device = 'tiff', width = 6.7, height = 6.2, units = 'in', dpi = 300)
 
 
@@ -705,7 +673,7 @@ points(METH[,indices[1,]], METH[,indices[2,]], cex = 2, pch = 19,
 
 
 # Point-of-view on CpGs
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 tiff(filename = 'tech_rep.tiff', width = 6, height = 6, units = 'in', res = 300)
 plot(0, 1, type = 'n', ylim = c(0,1), xlim = c(0,1), main = '6 technical replicates', 
      xlab= 'beta_rep1', ylab = 'beta_rep2'); grid()
@@ -723,17 +691,17 @@ cor(as.numeric(METH_corrected[,indices[1,]])[-outliers], as.numeric(METH_correct
 
 
 
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 UMtools::export_bigmat(bigmat = round(rbind(t(METH[,indices[1,]]), t(METH[,indices[2,]])), 5), 'REP_uncorrected.txt')
 
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 UMtools::export_bigmat(bigmat = round(rbind(t(METH_corrected[,indices[1,]]), t(METH_corrected[,indices[2,]])), 5), 'REP_corrected.txt')
 
 
 ######## CORRECTED
 
 # Point-of-view on CpGs
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 tiff(filename = 'tech_rep_CORRECTED.tiff', width = 6, height = 6, units = 'in', res = 300)
 rep = names(which(table(colnames(METH_corrected)) > 1))
 indices = sapply(1:length(rep), function(x) which(colnames(METH_corrected) == rep[x]))
@@ -788,7 +756,7 @@ plot(METH['cg01940273',], METH['cg21566642',], xlim = c(0,1), ylim = c(0,1), pch
 plot(METH['cg05951221',], METH['cg21566642',], xlim = c(0,1), ylim = c(0,1), pch = 19, col = alpha('black', 0.5))
 
 
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 tiff(filename = 'correlogram.tiff', res = 300, width = 4, height = 4.1, units = 'in')
 corrplot(cor(t(METH), method = 'spearman'), method="circle", order = 'hclust', type = 'lower', diag = F, 
          tl.cex = 0.5, cl.cex = 0.5)
@@ -808,7 +776,7 @@ p = ggplot(data = na.omit(df), aes(x = sex, y = value, fill = smoke)) + geom_box
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + facet_wrap(~variable) +
   scale_fill_manual(values = c('bisque1', 'gray82', 'dimgray')) + xlab("")
 
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 ggsave(filename = 'sex.tiff', plot = p, device = 'tiff', width = 6.7, height = 6.2, units = 'in', dpi = 300)
 
 
@@ -845,7 +813,7 @@ p = ggplot(data = df[!is.na(df$n_cigarettes) & !is.na(df$smoke),], aes(x = n_cig
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + facet_wrap(~variable, ncol = 6) +
   scale_color_manual(values = c('bisque1', 'gray82', 'dimgray')) + xlab("") + geom_smooth(method = 'lm', linetype = 2, col = 'red2')
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 ggsave(filename = 'ncigaretteaday.tiff', plot = p, device = 'tiff', width = 7, height = 4, units = 'in', dpi = 300)
 
 pvals = sapply(1:nrow(METH), function(x) summary(lm(X[!is.na(X$n_cigarettes) & !is.na(df$smoke),x] ~ X$n_cigarettes[!is.na(X$n_cigarettes) & !is.na(df$smoke)]))$coefficients[2,'Pr(>|t|)'])
@@ -857,7 +825,7 @@ p = ggplot(data = df[!is.na(df$time_since_cessation) & !is.na(df$smoke),], aes(x
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + facet_wrap(~variable, ncol = 6) +
   scale_color_manual(values = c('gray82', 'dimgray')) + xlab("") + geom_smooth(method = 'lm', linetype = 2, col = 'red2')
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 ggsave(filename = 'timesincecessation.tiff', plot = p, device = 'tiff', width = 7, height = 4, units = 'in', dpi = 300)
 
 dim(X[!is.na(X$time_since_cessation) & X$smoke != '', ]) # 70 16
@@ -937,16 +905,11 @@ table(jkl$ERF_gender[jkl$smoking_3cat == 'current_smoker'])
 table(jkl$ERF_gender)
 124/(124+108)
 
-# setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
-# UMtools::export_bigmat(bigmat = cbind(t(round(X, 5)), phenotype[match(colnames(X), phenotype$ERF_ID),]), 'dataset_uncorrected.txt')
-# 
-# setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
-# UMtools::export_bigmat(bigmat = cbind(t(round(X_corrected, 5)), phenotype[match(colnames(X), phenotype$ERF_ID),]), 'dataset_corrected.txt')
 
 EXPORT_ORDER = as.character(EXPORT_ORDER)
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 UMtools::export_bigmat(bigmat = t(round(X[, EXPORT_ORDER], 3)), 'dataset_uncorrected.txt')
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 UMtools::export_bigmat(bigmat = t(round(X_corrected[, EXPORT_ORDER], 3)), 'dataset_corrected.txt')
 
 
@@ -1043,7 +1006,7 @@ df$variable = factor(df$variable, levels = LEV)
 p = ggplot(data = na.omit(df), aes(x = variable, y = value, fill = Smoking)) + geom_boxplot() + theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
   scale_fill_manual(values = c('bisque1', 'dimgray')) + xlab("")
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 ggsave(filename = '2cat_silvana_450K.tiff', plot = p, device = 'tiff', width = 6.7, height = 6.2, units = 'in', dpi = 300)
 
 # UNCORRECTED
@@ -1064,7 +1027,7 @@ df_all$label = factor(df_all$label, levels = c('microarray: non-smoker', 'seq: n
 p = ggplot(data = na.omit(df_all), aes(x = value, y = label, fill = label)) + geom_density_ridges() + facet_wrap(~variable) + 
   theme_minimal() + scale_fill_manual(values = c('slategray1', 'slategray4', 'papayawhip', 'lightsteelblue')) + xlab('') +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), legend.position= 'none')  + xlim(0,1)
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 ggsave(filename = '450K_sequncorr_comp.tiff', plot = p, device = 'tiff', width = 6.7, height = 6.2, units = 'in', dpi = 300)
 
 LEV = levels(df_all$variable)
@@ -1096,7 +1059,7 @@ df_all$label = factor(df_all$label, levels = c('microarray: non-smoker', 'seq: n
 p = ggplot(data = na.omit(df_all), aes(x = value, y = label, fill = label)) + geom_density_ridges() + facet_wrap(~variable) + 
   theme_minimal() + scale_fill_manual(values = c('slategray1', 'slategray4', 'papayawhip', 'lightsteelblue')) + xlab('') +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), legend.position= 'none') + xlim(0,1)
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 ggsave(filename = '450K_seqcorr_comp.tiff', plot = p, device = 'tiff', width = 6.7, height = 6.2, units = 'in', dpi = 300)
 
 LEV = levels(df_all$variable)
@@ -1225,12 +1188,11 @@ plot(roc.perf, main = paste("AUC =", round(auc_ROCR@y.values[[1]], 5))); abline(
 
 y_pred = as.numeric(predict(model$finalModel, type = 'response') > 0.5)
 y_real = as.numeric(df_global$Smoking == 'current_smoker')
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 tiff(filename = 'microarray_2cat_conf.tiff', res = 300, width = 4, height = 4.1, units = 'in')
 gplots::balloonplot(table(y_real[df_global$technology == 'microarray'], 
                           y_pred[df_global$technology == 'microarray']), main = '')
 dev.off()
-
 tiff(filename = 'seq_2cat_conf.tiff', res = 300, width = 4, height = 4.1, units = 'in')
 gplots::balloonplot(table(y_real[df_global$technology == 'sequencing'], 
                           y_pred[df_global$technology == 'sequencing']), main = '')
@@ -1248,7 +1210,7 @@ dev.off()
 ghj = rep(phenotype[match(c('2931', '3083', '3869', '417', '4552', '653'), phenotype$ERF_ID),]$smoking_3cat, 2)
 table(cat, ghj)[,c('past_smoker', 'current_smoker')]
 
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 tiff(filename = 'REAL_reps_2cat_conf.tiff', res = 300, width = 4, height = 4.1, units = 'in')
 gplots::balloonplot(unname(table(ghj, cat)[c('past_smoker', 'current_smoker'),]), main = '')
 dev.off()
@@ -1384,7 +1346,7 @@ y_real__3cat = y_real[df_global$technology == 'sequencing']
 ##
 
 
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 tiff(filename = 'microarray_3cat_conf.tiff', res = 300, width = 4, height = 4.1, units = 'in')
 gplots::balloonplot(table(y_real[df_global$technology == 'microarray'], 
                           y_pred[df_global$technology == 'microarray']), main = '')
@@ -1400,7 +1362,7 @@ Prob = data.frame(predict(model, df_global[df_global$technology == 'microarray',
 Prob$reported = df_global$Smoking[df_global$technology == 'microarray']
 p = ggtern(data=Prob, aes(x=non_smoker,y=past_smoker, z=current_smoker, col = reported)) +  geom_point(alpha = 0.1, size = 0.5)+
   limit_tern(1.1,1.1,1.1) + scale_color_manual(values = c('forestgreen', 'goldenrod1', 'darkslateblue'))
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 ggsave(filename = 'tern_microarray.tiff', plot = p, 
        device = 'tiff', width = 6.7/1.5, height = 6/2, units = 'in', dpi = 300)
 
@@ -1410,7 +1372,7 @@ Prob$reported = df_global$Smoking[df_global$technology == 'sequencing']
 p = ggtern(data=Prob, aes(x=non_smoker,y=past_smoker, z=current_smoker, col = reported)) +  geom_point(alpha = 0.5, size = 1)+
   limit_tern(1.1,1.1,1.1) + scale_color_manual(values = c('forestgreen', 'goldenrod1', 'darkslateblue'))
 
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 ggsave(filename = 'tern_seq.tiff', plot = p, 
        device = 'tiff', width = 6.7/1.5, height = 6/2, units = 'in', dpi = 300)
 
@@ -1420,7 +1382,7 @@ df_rep = data.frame(t(REP))
 df_rep$technology = 'sequencing'
 Prob = data.frame(predict(model, df_rep, type = "prob"))
 cat = factor(sapply(1:nrow(Prob), function(x) which.max(Prob[x,])), 1:3)
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 tiff(filename = 'reps_3cat_conf.tiff', res = 300, width = 4, height = 4.1, units = 'in')
 gplots::balloonplot(table(unname(cat[1:6]), unname(cat[7:12])), main = '')
 dev.off()
@@ -1447,7 +1409,7 @@ table(y_real__2cat, y_real__3cat)
 # 1             0  0 90
 
 matrices = lapply(1:3, function(x) table(y_pred__2cat, y_pred__3cat, y_real__3cat)[,,x])
-setwd('/media/ultron/2tb_disk2/0_startallover/Smoking_NFI_2/Z_Figures/')
+setwd("<dir>")
 tiff(filename = '2cat_vs_3cat_1', res = 300, width = 4, height = 4.1, units = 'in')
 gplots::balloonplot(matrices[[1]], main = '')
 dev.off()
@@ -1641,6 +1603,71 @@ model$finalModel
 ############################################################################################
 
 sessionInfo()
-
-
+# R version 4.2.1 (2022-06-23)
+# Platform: x86_64-pc-linux-gnu (64-bit)
+# Running under: Ubuntu 18.04.6 LTS
+# 
+# Matrix products: default
+# BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.7.1
+# LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.7.1
+# 
+# locale:
+# [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C               LC_TIME=nl_NL.UTF-8        LC_COLLATE=en_US.UTF-8     LC_MONETARY=nl_NL.UTF-8   
+# [6] LC_MESSAGES=en_US.UTF-8    LC_PAPER=nl_NL.UTF-8       LC_NAME=C                  LC_ADDRESS=C               LC_TELEPHONE=C            
+# [11] LC_MEASUREMENT=nl_NL.UTF-8 LC_IDENTIFICATION=C       
+# 
+# attached base packages:
+# [1] parallel  stats4    stats     graphics  grDevices utils     datasets  methods   base     
+# 
+# other attached packages:
+# [1] IlluminaHumanMethylation450kanno.ilmn12.hg19_0.6.1 UMtools_0.1                                       
+# [3] dbscan_1.1-10                                      Sushi_1.34.0                                      
+# [5] biomaRt_2.52.0                                     zoo_1.8-10                                        
+# [7] EMCluster_0.2-14                                   Matrix_1.5-1                                      
+# [9] minfi_1.42.0                                       bumphunter_1.38.0                                 
+# [11] locfit_1.5-9.6                                     iterators_1.0.14                                  
+# [13] foreach_1.5.2                                      Biostrings_2.64.0                                 
+# [15] XVector_0.36.0                                     SummarizedExperiment_1.26.1                       
+# [17] Biobase_2.56.0                                     MatrixGenerics_1.8.1                              
+# [19] matrixStats_0.62.0                                 GenomicRanges_1.48.0                              
+# [21] GenomeInfoDb_1.32.3                                IRanges_2.30.0                                    
+# [23] S4Vectors_0.34.0                                   BiocGenerics_0.42.0                               
+# [25] effectsize_0.8.1                                   MLmetrics_1.1.3                                   
+# [27] HandTill2001_1.0.1                                 ROCR_1.0-11                                       
+# [29] minpack.lm_1.2-2                                   caret_6.0-93                                      
+# [31] lattice_0.20-45                                    nnet_7.3-17                                       
+# [33] MASS_7.3-58.1                                      corrplot_0.92                                     
+# [35] scales_1.2.0                                       RColorBrewer_1.1-3                                
+# [37] ggtern_3.3.5                                       ggridges_0.5.4                                    
+# [39] ggplot2_3.3.6                                      gplots_3.1.3                                      
+# [41] data.table_1.14.2                                 
+# 
+# loaded via a namespace (and not attached):
+# [1] utf8_1.2.2                proto_1.0.0               tidyselect_1.2.0          RSQLite_2.2.15            AnnotationDbi_1.58.0     
+# [6] grid_4.2.1                BiocParallel_1.30.3       pROC_1.18.0               munsell_0.5.0             codetools_0.2-18         
+# [11] preprocessCore_1.58.0     future_1.28.0             withr_2.5.0               colorspace_2.0-3          filelock_1.0.2           
+# [16] rstudioapi_0.13           robustbase_0.95-0         bayesm_3.1-4              listenv_0.8.0             GenomeInfoDbData_1.2.8   
+# [21] datawizard_0.6.3          bit64_4.0.5               rhdf5_2.40.0              parallelly_1.32.1         vctrs_0.4.1              
+# [26] generics_0.1.3            ipred_0.9-13              BiocFileCache_2.4.0       R6_2.5.1                  illuminaio_0.38.0        
+# [31] bitops_1.0-7              rhdf5filters_1.8.0        cachem_1.0.6              reshape_0.8.9             DelayedArray_0.22.0      
+# [36] assertthat_0.2.1          BiocIO_1.6.0              gtable_0.3.0              globals_0.16.1            timeDate_4021.106        
+# [41] rlang_1.0.6               genefilter_1.78.0         splines_4.2.1             rtracklayer_1.56.1        ModelMetrics_1.2.2.2     
+# [46] GEOquery_2.64.2           yaml_2.3.5                reshape2_1.4.4            GenomicFeatures_1.48.3    tensorA_0.36.2           
+# [51] tools_4.2.1               lava_1.7.0                nor1mix_1.3-0             ellipsis_0.3.2            siggenes_1.70.0          
+# [56] latex2exp_0.9.5           Rcpp_1.0.9                plyr_1.8.7                sparseMatrixStats_1.8.0   progress_1.2.2           
+# [61] zlibbioc_1.42.0           purrr_0.3.4               RCurl_1.98-1.8            prettyunits_1.1.1         rpart_4.1.16             
+# [66] openssl_2.0.2             magrittr_2.0.3            hms_1.1.1                 xtable_1.8-4              XML_3.99-0.10            
+# [71] mclust_5.4.10             gridExtra_2.3             compiler_4.2.1            tibble_3.1.8              KernSmooth_2.23-20       
+# [76] crayon_1.5.1              tzdb_0.3.0                tidyr_1.2.0               lubridate_1.8.0           DBI_1.1.3                
+# [81] dbplyr_2.2.1              rappdirs_0.3.3            compositions_2.0-4        readr_2.1.2               cli_3.4.1                
+# [86] quadprog_1.5-8            insight_0.18.6            gower_1.0.0               pkgconfig_2.0.3           GenomicAlignments_1.32.1 
+# [91] recipes_1.0.2             xml2_1.3.3                annotate_1.74.0           hardhat_1.2.0             rngtools_1.5.2           
+# [96] multtest_2.52.0           beanplot_1.3.1            prodlim_2019.11.13        doRNG_1.8.2               scrime_1.3.5             
+# [101] stringr_1.4.0             digest_0.6.29             parameters_0.19.0         base64_2.0                DelayedMatrixStats_1.18.0
+# [106] restfulr_0.0.15           curl_4.3.2                Rsamtools_2.12.0          gtools_3.9.3              rjson_0.2.21             
+# [111] lifecycle_1.0.3           nlme_3.1-159              Rhdf5lib_1.18.2           askpass_1.1               limma_3.52.2             
+# [116] fansi_1.0.3               pillar_1.8.0              KEGGREST_1.36.3           fastmap_1.1.0             httr_1.4.3               
+# [121] DEoptimR_1.0-11           survival_3.4-0            glue_1.6.2                bayestestR_0.13.0         png_0.1-7                
+# [126] bit_4.0.4                 class_7.3-20              stringi_1.7.8             HDF5Array_1.24.2          blob_1.2.3               
+# [131] caTools_1.18.2            memoise_2.0.1             dplyr_1.0.9               future.apply_1.9.1 
 
