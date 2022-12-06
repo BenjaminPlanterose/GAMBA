@@ -33,7 +33,7 @@ multiqc --help
 cutadapt -h
 bismark --help
 samtools --help
-bash <path_to_GAMBA>/src/GAMBA.sh --h
+bash <path_to_GAMBA>/src/GAMBA.sh --help
 ```
 
 ## Example
